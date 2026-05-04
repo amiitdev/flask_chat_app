@@ -3,7 +3,7 @@ services:
     name: flask-chat-app
     env: python
     plan: starter
-    buildCommand: pip install -r requirements.txt
+    buildCommand: pip install -r requirements.txt && python -c "import psycopg2; print('psycopg2 OK')"
     startCommand: gunicorn -w 1 app:app
     envVars:
       - key: FLASK_ENV

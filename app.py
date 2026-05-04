@@ -25,32 +25,40 @@ app = Flask(__name__)
 is_production = os.getenv('FLASK_ENV') == 'production'
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev_key')
 
-# Database configuration - only set if URL is valid
+# Database configuration with multiple fallbacks
 db_url = os.getenv('DATABASE_URL', '').strip()
+if not db_url:
+    # Try render's automatic database binding
+    db_url = os.getenv('RENDER_POSTGRES_DATABASE_URL', '').strip()
+
+print(f"DEBUG: DATABASE_URL = {'SET' if db_url else 'NOT SET'}")
+
 if db_url and db_url != '':
     if db_url.startswith('postgres://'):
         db_url = db_url.replace('postgres://', 'postgresql://', 1)
     app.config['SQLALCHEMY_DATABASE_URI'] = db_url
+    print(f"DEBUG: Using PostgreSQL database")
 else:
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///chat.db'
+    print("DEBUG: Using SQLite fallback (DATABASE_URL not set)")
     
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
-app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
 
-# Session security for production
-if is_production:
-    app.config['SESSION_COOKIE_SECURE'] = True
-    app.config['SESSION_COOKIE_HTTPONLY'] = True
-    app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+# Don't initialize database at module level - do it lazily
+def init_db():
+    """Initialize database if not already done."""
+    if not hasattr(init_db, 'initialized'):
+        try:
+            db.init_app(app)
+            with app.app_context():
+                db.create_all()
+            init_db.initialized = True
+            print("Database initialized successfully")
+        except Exception as e:
+            print(f"Warning: Database initialization failed: {e}")
 
-# Initialize database with error handling
-try:
-    if app.config.get('SQLALCHEMY_DATABASE_URI'):
-        db.init_app(app)
-except Exception as e:
-    print(f"Warning: Database initialization failed: {e}")
-    pass
+# Call this before first database access
+init_db()
 
 # Flask-Migrate for database migrations (optional, for manual use)
 try:
