@@ -3,8 +3,9 @@ services:
     name: flask-chat-app
     env: python
     plan: starter
-    buildCommand: pip install -r requirements.txt && flask db upgrade
+    buildCommand: pip install -r requirements.txt
     startCommand: gunicorn -k eventlet -w 1 app:app
+    releaseCommand: flask db upgrade
     envVars:
       - key: FLASK_ENV
         value: production
