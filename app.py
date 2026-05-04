@@ -24,9 +24,16 @@ app = Flask(__name__)
 # Security configurations
 is_production = os.getenv('FLASK_ENV') == 'production'
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev_key')
-db_url = os.getenv('DATABASE_URL', 'sqlite:///chat.db')
+
+# Database configuration - only set if URL is valid
+db_url = os.getenv('DATABASE_URL', '').strip()
 if db_url and db_url != '':
-    app.config['SQLALCHEMY_DATABASE_URI'] = db_url.replace('postgres://', 'postgresql://', 1)
+    if db_url.startswith('postgres://'):
+        db_url = db_url.replace('postgres://', 'postgresql://', 1)
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_url
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///chat.db'
+    
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
@@ -37,7 +44,13 @@ if is_production:
     app.config['SESSION_COOKIE_HTTPONLY'] = True
     app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 
-db.init_app(app)
+# Initialize database with error handling
+try:
+    if app.config.get('SQLALCHEMY_DATABASE_URI'):
+        db.init_app(app)
+except Exception as e:
+    print(f"Warning: Database initialization failed: {e}")
+    pass
 
 # Flask-Migrate for database migrations (optional, for manual use)
 try:
