@@ -59,10 +59,6 @@ try:
 except ImportError:
     migrate = None
 
-# Create tables on startup if they don't exist
-with app.app_context():
-    db.create_all()
-
 # CORS configuration - restrict in production
 cors_origins = os.getenv('CORS_ORIGINS', '*')
 if is_production and cors_origins == '*':
