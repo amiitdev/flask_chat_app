@@ -24,9 +24,9 @@ app = Flask(__name__)
 # Security configurations
 is_production = os.getenv('FLASK_ENV') == 'production'
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev_key')
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///chat.db').replace(
-    'postgres://', 'postgresql://', 1
-)
+db_url = os.getenv('DATABASE_URL', 'sqlite:///chat.db')
+if db_url:
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_url.replace('postgres://', 'postgresql://', 1)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
@@ -39,9 +39,16 @@ if is_production:
 
 db.init_app(app)
 
-# Flask-Migrate for database migrations
-from flask_migrate import Migrate
-migrate = Migrate(app, db)
+# Flask-Migrate for database migrations (optional, for manual use)
+try:
+    from flask_migrate import Migrate
+    migrate = Migrate(app, db)
+except ImportError:
+    migrate = None
+
+# Create tables on startup if they don't exist
+with app.app_context():
+    db.create_all()
 
 # CORS configuration - restrict in production
 cors_origins = os.getenv('CORS_ORIGINS', '*')
