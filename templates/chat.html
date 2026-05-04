@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="chat-app d-flex flex-column" style="height: calc(100vh - 76px);">
+    <div class="row g-0 flex-grow-1 h-100">
+        <div class="col-md-4 col-lg-3 border-end bg-white d-flex flex-column h-100 sidebar-mobile" id="sidebar">
+            <div class="p-3 border-bottom bg-primary text-white d-flex align-items-center justify-content-between">
+                <h5 class="mb-0 fw-bold"><i class="fas fa-users me-2"></i>Contacts</h5>
+                <span class="badge bg-light text-primary rounded-pill">{{ users|length }}</span>
+            </div>
+            <div class="flex-grow-1 overflow-auto user-list" id="user-list">
+                {% for user in users %}
+                    <div class="user-item p-3 border-bottom hover-bg-light cursor-pointer"
+                         data-user-id="{{ user.id }}" data-username="{{ user.username }}">
+                        <div class="d-flex align-items-center">
+                            <div class="position-relative">
+                                <img src="{{ user.profile_pic if user.profile_pic and user.profile_pic.startswith('http') else '/static/uploads/profiles/' + (user.profile_pic if user.profile_pic else 'default.png') }}"
+                                     class="rounded-circle me-3" width="50" height="50" style="object-fit:cover;">
+                                <span class="status-dot position-absolute bottom-0 end-0 rounded-circle border border-white bg-secondary" style="width:12px;height:12px;"></span>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h6 class="mb-0 fw-bold">{{ user.username }}</h6>
+                                <small class="status-text text-muted">Offline</small>
+                                <small class="typing-status" id="typing-{{ user.id }}"></small>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="col-md-8 col-lg-9 d-flex flex-column h-100 bg-light">
+            <div id="no-chat-selected" class="flex-grow-1 d-flex align-items-center justify-content-center">
+                <div class="text-center text-muted">
+                    <i class="fas fa-comments fa-4x mb-3 opacity-25"></i>
+                    <h4 class="fw-light">Select a contact to start chatting</h4>
+                    <p class="opacity-50">Choose from your contacts on the left</p>
+                </div>
+            </div>
+
+            <div id="chat-window" class="flex-grow-1 d-none d-flex flex-column h-100">
+                <div class="chat-header p-3 bg-white border-bottom d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <button class="btn btn-sm btn-light d-md-none me-2" onclick="document.getElementById('sidebar').classList.remove('show')">
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                        <img id="chat-avatar" src="" class="rounded-circle me-3" width="45" height="45" style="object-fit:cover;">
+                        <div>
+                            <h5 class="mb-0 fw-bold" id="chat-with-name">Chat</h5>
+                            <small class="text-success typing-indicator d-none">
+                                <i class="fas fa-circle fa-xs me-1"></i>typing...
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-grow-1 overflow-auto p-4" id="message-area" style="background: #f8f9fa;">
+                </div>
+
+                <div class="reply-preview p-2 bg-light border-top d-none" id="reply-preview">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <small class="text-muted">Replying to <strong id="reply-sender"></strong>:</small>
+                            <div id="reply-content" class="small text-truncate"></div>
+                        </div>
+                        <button class="btn-close btn-sm" onclick="cancelReply()"></button>
+                    </div>
+                </div>
+
+                <div class="p-3 bg-white border-top">
+                    <div id="image-preview-area" class="mb-2 d-none">
+                        <div class="position-relative d-inline-block">
+                            <img id="image-preview" src="" class="img-thumbnail" style="max-height:150px;">
+                            <button type="button" class="btn-close position-absolute top-0 end-0 bg-white rounded-circle" id="remove-image"></button>
+                        </div>
+                    </div>
+                    <form id="chat-form" class="d-flex align-items-center gap-2">
+                        <label for="image-upload" class="btn btn-light rounded-circle mb-0" style="width:42px;height:42px;">
+                            <i class="fas fa-paperclip text-primary"></i>
+                        </label>
+                        <input type="file" id="image-upload" accept="image/*" class="d-none">
+                        <input type="text" class="form-control rounded-pill px-3" id="message-input"
+                               placeholder="Type a message..." autocomplete="off">
+                        <button type="submit" class="btn btn-primary rounded-circle mb-0" style="width:42px;height:42px;">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+{% endblock %}
