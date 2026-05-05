@@ -162,3 +162,47 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; overflow-x
 
 .opacity-50 { opacity: 0.5; }
 .text-truncate { max-width: 200px; display: inline-block; }
+
+/* Dark Mode - Default */
+body { background: #1a1a2e; color: #e0e0e0; }
+
+.chat-app { background: #16213e; }
+
+.sidebar-mobile { background: #0f3460 !important; }
+
+.user-item { border-color: #1a1a2e !important; }
+.user-item:hover { background-color: #1a1a2e !important; }
+.user-item.active { background-color: #1a1a2e !important; border-left-color: #00d4ff !important; }
+
+.message-received { background: #2a2a4a !important; color: #e0e0e0 !important; }
+.message-sent { background: linear-gradient(135deg, #0084ff, #00d4ff) !important; }
+
+#message-area { background: #16213e !important; }
+.reply-preview { background: #1a1a2e !important; border-color: #00d4ff !important; }
+
+.typing-indicator { color: #00d4ff !important; }
+
+::-webkit-scrollbar-track { background: #0f3460; }
+::-webkit-scrollbar-thumb { background: #1a1a2e; }
+::-webkit-scrollbar-thumb:hover { background: #2a2a4a; }
+
+.card { background: #0f3460 !important; color: #e0e0e0; }
+.input-group-text { background: #1a1a2e !important; color: #e0e0e0 !important; border-color: #2a2a4a !important; }
+.form-control { background: #1a1a2e !important; color: #e0e0e0 !important; border-color: #2a2a4a !important; }
+.form-control:focus { background: #0f3460 !important; color: #e0e0e0 !important; border-color: #00d4ff !important; }
+
+.form-control::placeholder { color: #888; }
+
+.bg-light { background: #1a1a2e !important; }
+.text-primary { color: #00d4ff !important; }
+.border-bottom { border-color: #2a2a4a !important; }
+
+.navbar { background: #0f3460 !important; }
+.btn-outline-light { color: #e0e0e0; border-color: #e0e0e0; }
+.btn-outline-light:hover { background: #1a1a2e; color: #00d4ff; }
+
+#chat-form input { background: #1a1a2e !important; color: #e0e0e0 !important; }
+#chat-form input:focus { border-color: #00d4ff !important; box-shadow: 0 0 0 0.2rem rgba(0,212,255,0.15) !important; }
+
+.toast { background: #0f3460; color: #e0e0e0; }
+.badge.bg-light { background: #1a1a2e !important; color: #00d4ff !important; }
