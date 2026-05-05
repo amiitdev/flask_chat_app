@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="chat-app d-flex flex-column" style="height: calc(100dvh - 76px);">
-    <div class="row g-0 flex-grow-1 h-100">
-        <div class="col-md-4 col-lg-3 border-end bg-white d-flex flex-column h-100 sidebar-mobile" id="sidebar">
+<div class="chat-app d-flex flex-column">
+    <div class="chat-layout row g-0 flex-grow-1">
+        <div class="col-md-4 col-lg-3 border-end bg-white d-flex flex-column sidebar-mobile" id="sidebar">
             <div class="p-3 border-bottom bg-primary text-white d-flex align-items-center justify-content-between">
                 <h5 class="mb-0 fw-bold"><i class="fas fa-users me-2"></i>Contacts</h5>
                 <span class="badge bg-light text-primary rounded-pill">{{ users|length }}</span>
@@ -29,7 +29,7 @@
             </div>
         </div>
 
-        <div class="col-md-8 col-lg-9 d-flex flex-column h-100 bg-light">
+        <div class="col-md-8 col-lg-9 d-flex flex-column chat-main">
             <div id="no-chat-selected" class="flex-grow-1 d-flex align-items-center justify-content-center">
                 <div class="text-center text-muted">
                     <i class="fas fa-comments fa-4x mb-3 opacity-25"></i>
@@ -38,7 +38,7 @@
                 </div>
             </div>
 
-            <div id="chat-window" class="flex-grow-1 d-none d-flex flex-column h-100">
+            <div id="chat-window" class="flex-grow-1 d-none d-flex flex-column">
                 <div class="chat-header p-3 bg-white border-bottom d-flex align-items-center justify-content-between">
                     <div class="d-flex align-items-center">
                         <button class="btn btn-sm btn-light d-md-none me-2" onclick="document.getElementById('sidebar').classList.remove('show')">
@@ -57,7 +57,7 @@
                     </button>
                 </div>
 
-                <div class="flex-grow-1 overflow-auto p-4" id="message-area" style="background: #f8f9fa;">
+                <div class="flex-grow-1 overflow-auto p-4" id="message-area">
                 </div>
 
                 <div class="reply-preview p-2 bg-light border-top d-none" id="reply-preview">
@@ -70,7 +70,7 @@
                     </div>
                 </div>
 
-                <div class="p-3 border-top chat-input-container">
+                <div class="chat-input-container">
                     <div id="image-preview-area" class="mb-2 d-none">
                         <div class="position-relative d-inline-block">
                             <img id="image-preview" src="" class="img-thumbnail" style="max-height:150px;">
@@ -97,4 +97,27 @@
 
 {% block scripts %}
 <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+<script>
+// Handle mobile keyboard using visualViewport API
+if (window.visualViewport) {
+    const chatApp = document.querySelector('.chat-app');
+    const chatLayout = document.querySelector('.chat-layout');
+    
+    function updateHeight() {
+        if (window.innerWidth < 768) {
+            const vh = window.visualViewport.height;
+            if (chatApp) {
+                chatApp.style.height = vh + 'px';
+            }
+            if (chatLayout) {
+                chatLayout.style.height = vh + 'px';
+            }
+        }
+    }
+    
+    window.visualViewport.addEventListener('resize', updateHeight);
+    window.visualViewport.addEventListener('scroll', updateHeight);
+    updateHeight();
+}
+</script>
 {% endblock %}
