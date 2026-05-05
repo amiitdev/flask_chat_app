@@ -71,7 +71,7 @@ with app.app_context():
         print(f"Migration check skipped: {e}")
     # Fix existing users with default.png profile pic
     try:
-        default_cloudinary = 'https://res.cloudinary.com/de1kdinoe/image/upload/v1/chat_app/profiles/default_profile.png'
+        default_cloudinary = 'https://ui-avatars.com/api/?name=User&background=0d6efd&color=fff&size=128'
         affected = User.query.filter_by(profile_pic='default.png').update({'profile_pic': default_cloudinary})
         db.session.commit()
         if affected:
