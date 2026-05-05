@@ -241,12 +241,22 @@ document.addEventListener('DOMContentLoaded', function() {
     socket.on('user_typing', function(data) {
         if (data.user_id == currentRecipientId) {
             typingIndicator.classList.remove('d-none');
+            const typingContainer = document.getElementById('typing-indicator');
+            const typingUserName = document.getElementById('typing-user-name');
+            if (typingContainer && typingUserName) {
+                typingUserName.textContent = data.username || 'User';
+                typingContainer.classList.remove('d-none');
+            }
         }
     });
 
     socket.on('user_stop_typing', function(data) {
         if (data.user_id == currentRecipientId) {
             typingIndicator.classList.add('d-none');
+            const typingContainer = document.getElementById('typing-indicator');
+            if (typingContainer) {
+                typingContainer.classList.add('d-none');
+            }
         }
     });
 

@@ -3,6 +3,7 @@
 body { 
     margin: 0;
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
+    min-height: 100vh;
 }
 
 /* Only chat page gets special layout */
@@ -14,6 +15,8 @@ body.chat-page {
 body.chat-page main {
     height: calc(100vh - 76px);
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 /* ===== Chat Container - Fixed Layout ===== */
