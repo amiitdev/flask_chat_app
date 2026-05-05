@@ -69,6 +69,29 @@ with app.app_context():
             print("Fixed password_hash column length")
     except Exception as e:
         print(f"Migration check skipped: {e}")
+    # Add new columns if they don't exist (PostgreSQL compatible)
+    try:
+        from sqlalchemy import text
+        # Use IF NOT EXISTS to avoid errors if column already exists
+        new_columns = {
+            'theme_preference': "VARCHAR(20) DEFAULT 'dark'",
+            'sound_enabled': "BOOLEAN DEFAULT TRUE",
+            'notification_sound_choice': "VARCHAR(100) DEFAULT 'notification.mp3'",
+            'show_online_status': "BOOLEAN DEFAULT TRUE",
+            'typing_status_enabled': "BOOLEAN DEFAULT TRUE",
+            'read_receipts_enabled': "BOOLEAN DEFAULT TRUE"
+        }
+        
+        for col_name, col_def in new_columns.items():
+            try:
+                db.session.execute(text(f'ALTER TABLE "user" ADD COLUMN IF NOT EXISTS {col_name} {col_def}'))
+                print(f"Ensured column exists: {col_name}")
+            except Exception as e:
+                print(f"Column {col_name}: {e}")
+        
+        db.session.commit()
+    except Exception as e:
+        print(f"Column migration error: {e}")
     # Fix existing users with default.png profile pic
     try:
         default_cloudinary = 'https://ui-avatars.com/api/?name=User&background=0d6efd&color=fff&size=128'
