@@ -40,7 +40,8 @@ if db_url and db_url != '':
     if '?' not in db_url and 'postgresql://' in db_url:
         db_url += '?sslmode=disable'
     elif '?sslmode=' not in db_url and 'postgresql://' in db_url:
-        db_url += '&sslmode=disable'    app.config['SQLALCHEMY_DATABASE_URI'] = db_url
+        db_url += '&sslmode=disable'
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_url
     print(f"DEBUG: Using PostgreSQL database")
 else:
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///chat.db'
