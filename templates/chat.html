@@ -97,27 +97,4 @@
 
 {% block scripts %}
 <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
-<script>
-// Handle mobile keyboard using visualViewport API
-if (window.visualViewport) {
-    const chatApp = document.querySelector('.chat-app');
-    const chatLayout = document.querySelector('.chat-layout');
-    
-    function updateHeight() {
-        if (window.innerWidth < 768) {
-            const vh = window.visualViewport.height;
-            if (chatApp) {
-                chatApp.style.height = vh + 'px';
-            }
-            if (chatLayout) {
-                chatLayout.style.height = vh + 'px';
-            }
-        }
-    }
-    
-    window.visualViewport.addEventListener('resize', updateHeight);
-    window.visualViewport.addEventListener('scroll', updateHeight);
-    updateHeight();
-}
-</script>
 {% endblock %}
