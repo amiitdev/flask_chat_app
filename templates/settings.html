@@ -84,7 +84,6 @@
 <script>
 let currentChatUserId = null;
 
-// This will be set from chat.js when a user is selected
 function setCurrentChatUser(userId) {
     currentChatUserId = userId;
 }
@@ -99,8 +98,8 @@ function confirmClearChats() {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
         })
-        .then(res => res.json())
-        .then(data => {
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
             if (data.success) {
                 alert('Chat cleared successfully!');
                 location.reload();
@@ -108,7 +107,7 @@ function confirmClearChats() {
                 alert('Error: ' + (data.error || 'Unknown error'));
             }
         })
-        .catch(err => alert('Error clearing chats: ' + err));
+        .catch(function(err) { alert('Error clearing chats: ' + err); });
     }
 }
 </script>
@@ -118,7 +117,7 @@ function confirmClearChats() {
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const themeRadios = document.querySelectorAll('input[name="theme_preference"]');
-    themeRadios.forEach(radio => {
+    themeRadios.forEach(function(radio) {
         radio.addEventListener('change', function() {
             if (this.checked) {
                 switchTheme(this.value);
