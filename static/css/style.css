@@ -2,9 +2,9 @@
 
 body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; overflow-x: hidden; }
 
-.chat-app { height: calc(100vh - 76px); overflow-x: hidden; }
+.chat-app { height: calc(100dvh - 76px); overflow-x: hidden; }
 
-.chat-app { height: calc(100vh - 76px); }
+
 
 .hover-bg-light:hover { background-color: #f8f9fa; cursor: pointer; }
 .hover-bg-light.active { background-color: #e7f3ff; border-left: 3px solid #0d6efd; }
@@ -19,7 +19,7 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; overflow-x
         top: 76px;
         left: 0;
         width: 280px;
-        height: calc(100vh - 76px);
+        height: calc(100dvh - 76px);
         z-index: 1030;
         transform: translateX(-100%);
         transition: transform 0.3s ease;
@@ -140,6 +140,19 @@ body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; overflow-x
 @keyframes slideInRight {
     from { transform: translateX(100%); opacity: 0; }
     to { transform: translateX(0); opacity: 1; }
+}
+
+.chat-input-container {
+    position: sticky;
+    bottom: 0;
+    z-index: 1000;
+    width: 100%;
+    background-color: var(--bs-body-bg); /* Use Bootstrap's body background color */
+    padding-bottom: env(safe-area-inset-bottom); /* Account for safe area insets */
+}
+
+#message-area {
+    padding-bottom: 20px; /* Adjust as needed, ensure space for input */
 }
 
 ::-webkit-scrollbar { width: 6px; }
