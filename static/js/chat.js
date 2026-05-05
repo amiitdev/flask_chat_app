@@ -142,7 +142,6 @@ document.addEventListener('DOMContentLoaded', function() {
             cancelReply();
         }
         socket.emit('private_message', data);
-        playSound(); // Play sound after sending message
     }
 
     imageUpload.addEventListener('change', function(e) {
@@ -200,7 +199,10 @@ document.addEventListener('DOMContentLoaded', function() {
             if (isFromCurrentRecipient || isSentByMeToCurrentRecipient) {
                 appendMessage(data, true);
                 scrollToBottom();
-                if (isFromCurrentRecipient) showToast(data.sender_username + ' sent you a message');
+                if (isFromCurrentRecipient) {
+                    showToast(data.sender_username + ' sent you a message');
+                    playSound(); // Play sound for incoming messages
+                }
             }
         }
     });
