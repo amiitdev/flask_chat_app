@@ -1,25 +1,26 @@
 * { box-sizing: border-box; }
 
-html, body { 
+html { 
     height: 100%; 
-    margin: 0;
 }
 
 body { 
+    margin: 0;
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
     display: flex; 
     flex-direction: column; 
+    min-height: 100vh;
+}
+
+body.chat-page { 
+    height: 100%;
+    overflow: hidden;
 }
 
 main { 
     flex: 1; 
     display: flex; 
     flex-direction: column; 
-}
-
-/* Only apply to chat pages */
-body.chat-page {
-    overflow: hidden;
 }
 
 body.chat-page main {
