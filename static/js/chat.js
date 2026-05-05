@@ -413,7 +413,6 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(err => console.error('Delete error:', err));
         }
     };
-    };
 
     function scrollToBottom() {
         messageArea.scrollTop = messageArea.scrollHeight;
