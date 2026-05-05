@@ -55,6 +55,17 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 with app.app_context():
     db.create_all()
+    # Fix password_hash column length if needed (for scrypt hashes)
+    try:
+        from sqlalchemy import inspect, text
+        inspector = inspect(db.engine)
+        columns = {c['name']: c for c in inspector.get_columns('user')}
+        if 'password_hash' in columns and columns['password_hash']['type'].length < 255:
+            db.session.execute(text('ALTER TABLE "user" ALTER COLUMN password_hash TYPE VARCHAR(255)'))
+            db.session.commit()
+            print("Fixed password_hash column length")
+    except Exception as e:
+        print(f"Migration check skipped: {e}")
     print("Database initialized successfully")
 
 # Flask-Migrate for database migrations (optional, for manual use)
