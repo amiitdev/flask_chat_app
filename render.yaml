@@ -4,7 +4,7 @@ services:
     env: python
     plan: starter
     buildCommand: pip install -r requirements.txt && python -c "import psycopg2; print('psycopg2 OK')"
-    startCommand: gunicorn --worker-class eventlet -w 1 --timeout 120 app:app
+    startCommand: gunicorn --worker-class gevent -w 1 --timeout 120 app:app
     envVars:
       - key: FLASK_ENV
         value: production
