@@ -38,9 +38,9 @@ if db_url and db_url != '':
         db_url = db_url.replace('postgres://', 'postgresql://', 1)
     # Ensure SSL mode is set for production PostgreSQL connections
     if '?' not in db_url and 'postgresql://' in db_url:
-        db_url += '?sslmode=disable'
+        db_url += '?sslmode=require'
     elif '?sslmode=' not in db_url and 'postgresql://' in db_url:
-        db_url += '&sslmode=disable'
+        db_url += '&sslmode=require'
     app.config['SQLALCHEMY_DATABASE_URI'] = db_url
     print(f"DEBUG: Using PostgreSQL database")
 else:
@@ -50,7 +50,7 @@ else:
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initialize database
-print(f"DEBUG: SQLALCHEMY_DATABASE_URI before init_app: {app.config.get('SQLALCHEMY_DATABASE_URI')}")
+
 
 db.init_app(app)
 with app.app_context():
