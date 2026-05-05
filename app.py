@@ -69,6 +69,15 @@ with app.app_context():
             print("Fixed password_hash column length")
     except Exception as e:
         print(f"Migration check skipped: {e}")
+    # Fix existing users with default.png profile pic
+    try:
+        default_cloudinary = 'https://res.cloudinary.com/demo/image/upload/default_profile.png'
+        affected = User.query.filter_by(profile_pic='default.png').update({'profile_pic': default_cloudinary})
+        db.session.commit()
+        if affected:
+            print(f"Updated {affected} users with default Cloudinary profile pic")
+    except Exception as e:
+        print(f"Profile pic migration skipped: {e}")
     print("Database initialized successfully")
 
 # Flask-Migrate for database migrations (optional, for manual use)
