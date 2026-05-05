@@ -14,6 +14,13 @@ class User(UserMixin, db.Model):
     reset_token = db.Column(db.String(100), nullable=True)
     reset_token_expiry = db.Column(db.DateTime, nullable=True)
 
+    theme_preference = db.Column(db.String(20), default='dark')
+    sound_enabled = db.Column(db.Boolean, default=True)
+    notification_sound_choice = db.Column(db.String(100), default='notification.mp3')
+    show_online_status = db.Column(db.Boolean, default=True)
+    typing_status_enabled = db.Column(db.Boolean, default=True)
+    read_receipts_enabled = db.Column(db.Boolean, default=True)
+
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
 

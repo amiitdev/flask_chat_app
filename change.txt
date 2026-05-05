@@ -1,0 +1,998 @@
+   421
+   422     --typing-indicator-color: var(--primary-accent);
+   423
+   424     --scrollbar-track-bg: #e6fae8;
+   425     --scrollbar-thumb-bg: #b9e6be;
+   426     --scrollbar-thumb-hover-bg: #90d694;
+   427
+   428     --card-bg: #ffffff;
+   429     --card-color: #212529;
+   430
+   431     --input-bg: #e6fae8;
+   432     --input-color: #212529;
+   433     --input-border-color: #b9e6be;
+   434     --input-focus-shadow: 0 0 0 0.2rem var(--primary-accent-light);
+   435     --input-focus-border-color: var(--primary-accent);
+   436     --input-focus-bg: #fff;
+   437     --input-placeholder-color: #888;
+   438
+   439     --btn-outline-light-color: #e0e0e0;
+   440     --btn-outline-light-border-color: #e0e0e0;
+   441     --btn-outline-light-hover-bg: rgba(255,255,255,0.15);
+   442     --btn-outline-light-hover-color: var(--primary-accent);
+   443
+   444     --toast-bg: var(--primary-accent);
+   445     --toast-color: #fff;
+   446     --badge-bg-light: #e6fae8;
+   447     --badge-text-primary: var(--primary-accent);
+   448 }
+   449
+   450 /* Purple Theme */
+   451 body.theme-purple {
+   452     --primary-accent: #6f42c1;
+   453     --primary-accent-light: #8e6ee6;
+   454     --primary-accent-dark: #5a3d9a;
+   455
+   456     --body-bg: #f3e6fa;
+   457     --body-color: #212529;
+   458
+   459     --navbar-bg: var(--primary-accent);
+   460     --navbar-text-color: #e0e0e0;
+   461
+   462     --chat-app-bg: #ffffff;
+   463     --sidebar-bg: #f3e6fa;
+   464     --sidebar-border-color: #dee2e6;
+   465
+   466     --user-item-border: #dee2e6;
+   467     --user-item-hover-bg: #e2cff7;
+   468     --user-item-active-bg: #d4b8ee;
+   469     --user-item-active-border-left: var(--primary-accent);
+   470
+   471     --message-sent-bg-start: var(--primary-accent);
+   472     --message-sent-bg-end: var(--primary-accent-dark);
+   473     --message-sent-color: white;
+   474
+   475     --message-received-bg: #ffffff;
+   476     --message-received-color: #1a1a1a;
+   477
+   478     --message-time-sent-color: rgba(255,255,255,0.8);
+   479     --message-time-received-color: #999;
+   480
+   481     --reply-bubble-border: var(--primary-accent);
+   482     --reply-bubble-bg: rgba(111, 66, 193, 0.1);
+   483     --reply-preview-bg: #f8f0ff; /* Light purple tint */
+   484
+   485     --typing-indicator-color: var(--primary-accent);
+   486
+   487     --scrollbar-track-bg: #f3e6fa;
+   488     --scrollbar-thumb-bg: #d4b8ee;
+   489     --scrollbar-thumb-hover-bg: #c19ee6;
+   490
+   491     --card-bg: #ffffff;
+   492     --card-color: #212529;
+   493
+   494     --input-bg: #f3e6fa;
+   495     --input-color: #212529;
+   496     --input-border-color: #d4b8ee;
+   497     --input-focus-shadow: 0 0 0 0.2rem var(--primary-accent-light);
+   498     --input-focus-border-color: var(--primary-accent);
+   499     --input-focus-bg: #fff;
+   500     --input-placeholder-color: #888;
+   501
+   502     --btn-outline-light-color: #e0e0e0;
+   503     --btn-outline-light-border-color: #e0e0e0;
+   504     --btn-outline-light-hover-bg: rgba(255,255,255,0.15);
+   505     --btn-outline-light-hover-color: var(--primary-accent);
+   506
+   507     --toast-bg: var(--primary-accent);
+   508     --toast-color: #fff;
+   509     --badge-bg-light: #f3e6fa;
+   510     --badge-text-primary: var(--primary-accent);
+   511 }
+   512
+   513 /* Specific Bootstrap overrides with variables */
+   514 .bg-primary { background-color: var(--primary-accent) !important; }
+   515 .text-primary { color: var(--primary-accent) !important; }
+   516 .btn-primary {
+   517     --bs-btn-bg: var(--primary-accent);
+   518     --bs-btn-border-color: var(--primary-accent);
+   519     --bs-btn-hover-bg: var(--primary-accent-light);
+   520     --bs-btn-hover-border-color: var(--primary-accent-light);
+   521     --bs-btn-active-bg: var(--primary-accent-light);
+   522     --bs-btn-active-border-color: var(--primary-accent-light);
+   523 }
+   524 /* Revert Bootstrap defaults for other background/text utilities to use theme variables */
+   525 .bg-light { background-color: var(--body-bg) !important; }
+   526 .bg-white { background-color: var(--chat-app-bg) !important; }
+   527 .text-muted { color: var(--body-color) !important; } /* Ensure muted text is visible in all themes */
+   528
+   529 /* Navbar links and buttons specific to navbar background */
+   530 .navbar .nav-link { color: var(--navbar-text-color); }
+   531 .navbar .nav-link.btn-outline-light {
+   532     color: var(--btn-outline-light-color);
+   533     border-color: var(--btn-outline-light-border-color);
+   534 }
+   535 .navbar .nav-link.btn-outline-light:hover {
+   536     background: var(--btn-outline-light-hover-bg);
+   537     color: var(--btn-outline-light-hover-color);
+   538 }
+   539
+   540 /* Form controls */
+   541 .input-group-text {
+   542     background: var(--input-bg);
+   543     color: var(--input-color);
+   544     border: 1px solid var(--input-border-color); /* Add border for visibility */
+   545 }
+   546 .form-control {
+   547     background: var(--input-bg);
+   548     color: var(--input-color);
+   549     border: 1px solid var(--input-border-color); /* Add border for visibility */
+   550 }
+   551 .form-control:focus {
+   552     box-shadow: var(--input-focus-shadow);
+   553     background: var(--input-focus-bg);
+   554     border-color: var(--input-focus-border-color);
+   555     color: var(--input-color);
+   556 }
+   557 .form-control::placeholder { color: var(--input-placeholder-color); }
+   558
+   559 /* Toast messages */
+   560 .toast {
+   561     background: var(--toast-bg);
+   562     color: var(--toast-color);
+   563 }
+   564 .badge.bg-light {
+   565     background: var(--badge-bg-light);
+   566     color: var(--badge-text-primary);
+   567 }
+   568
+   569 /* Misc overrides */
+   570 .border-bottom { border-color: var(--sidebar-border-color) !important; }
+   571
+   572 /* Scrollbar colors based on theme */
+   573 ::-webkit-scrollbar-track { background: var(--scrollbar-track-bg); }
+   574 ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb-bg); border-radius: 3px; }
+   575 ::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover-bg); }
+   576 .user-list { scrollbar-color: var(--scrollbar-thumb-bg) var(--scrollbar-track-bg); }
+   577 ```**Theming Implementation Update**
+   578
+  I'm finalizing the large CSS variable replace operation in static/css/style.css, which defines all five themes and refactors existing styles. My focus is now on ensuring
+  precise old_string and new_string values to avoid errors and maintain integrity.
+
+  I will use the content from body { font-family: 'Segoe UI', ... } to the end of the file as old_string. The new_string will be the refactored CSS.
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+ > finish what you started                                                                                                                                                  
+▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+✦ Right. Apologies. I'm executing a major replace on static/css/style.css now. It will entirely refactor the theming, implementing five new themes via CSS variables. The
+  old_string will encompass the entire current CSS from body { font-family: ... to .badge.bg-light, replaced by my pre-constructed refactored new_string in one go.
+
+
+✦ Right, my mistake. I forgot the old_string in the replace tool. I'll get the entire static/css/style.css content, including the dark mode comment and rules, as the
+  old_string, then specify the new_string and execute.
+
+  ✓  ReadFile  static/css/style.css
+
+✦ Okay, I have the entire current content of static/css/style.css.
+  Now I can construct the replace call with the accurate old_string and the comprehensive new_string.
+
+  old_string (entire content from body { font-family: ... to the end of the file):
+
+     1 body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; overflow-x: hidden; display: flex; flex-direction: column; }
+     2
+     3 main { flex-grow: 1; display: flex; flex-direction: column; }
+     4
+     5 .chat-app { height: calc(100dvh - 76px); overflow-x: hidden; }
+     6
+     7
+     8
+     9 .hover-bg-light:hover { background-color: #f8f9fa; cursor: pointer; }
+    10 .hover-bg-light.active { background-color: #e7f3ff; border-left: 3px solid #0d6efd; }
+    11
+    12 .user-item { transition: all 0.2s ease; }
+    13 .user-item:hover { background-color: #f0f2f5; }
+    14
+    15 .sidebar-mobile { transition: transform 0.3s ease; }
+    16 @media (max-width: 767.98px) {
+    17     .sidebar-mobile {
+    18         position: fixed;
+    19         top: 76px;
+    20         left: 0;
+    21         width: 280px;
+    22         height: calc(100dvh - 76px);
+    23         z-index: 1030;
+    24         transform: translateX(-100%);
+    25         transition: transform 0.3s ease;
+    26         box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    27     }
+    28     .sidebar-mobile.show {
+    29         transform: translateX(0);
+    30     }
+    31 }
+    32
+    33 #message-area {
+    34     display: flex;
+    35     flex-direction: column;
+    36     overflow-x: hidden;
+    37     word-wrap: break-word;
+    38 }
+    39
+    40 .message {
+    41     max-width: 70%;
+    42     margin-bottom: 12px;
+    43     padding: 10px 15px;
+    44     border-radius: 18px;
+    45     position: relative;
+    46     animation: fadeInUp 0.3s ease;
+    47     word-wrap: break-word;
+    48     overflow-wrap: break-word;
+    49 }
+    50
+    51 @media (max-width: 767.98px) {
+    52     .message {
+    53         max-width: 85%;
+    54     }
+    55 }
+    56
+    57 @keyframes fadeInUp {
+    58     from { opacity: 0; transform: translateY(10px); }
+    59     to { opacity: 1; transform: translateY(0); }
+    60 }
+    61
+    62 .message-sent {
+    63     align-self: flex-end;
+    64     background: linear-gradient(135deg, #0084ff, #0066cc);
+    65     color: white;
+    66     border-bottom-right-radius: 6px;
+    67     box-shadow: 0 2px 8px rgba(0,132,255,0.3);
+    68 }
+    69
+    70 .message-received {
+    71     align-self: flex-start;
+    72     background: white;
+    73     color: #1a1a1a;
+    74     border-bottom-left-radius: 6px;
+    75     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    76 }
+    77
+    78 .message-content { font-size: 0.95rem; line-height: 1.4; overflow-wrap: break-word; }
+    79 .message-content img { max-width: 100%; height: auto; border-radius: 12px; margin-top: 5px; cursor: pointer; display: block; }
+    80
+    81 @media (max-width: 767.98px) {
+    82     .message-content img { max-width: 100%; width: 100%; height: auto; }
+    83 }
+    84
+    85 .message-content img {
+    86     max-width: 100%;
+    87     height: auto;
+    88     border-radius: 12px;
+    89     margin-top: 5px;
+    90     cursor: pointer;
+    91     display: block;
+    92     object-fit: contain;
+    93 }
+    94
+    95 .message img {
+    96     max-width: 100% !important;
+    97     height: auto !important;
+    98 }
+    99
+   100 .message-time {
+   101     font-size: 0.7rem;
+   102     opacity: 0.7;
+   103     margin-top: 4px;
+   104     display: block;
+   105     text-align: right;
+   106 }
+   107
+   108 .message-sent .message-time { color: rgba(255,255,255,0.8); }
+   109 .message-received .message-time { color: #999; }
+   110
+   111 .message-actions { z-index: 10; }
+   112 .message:hover .message-actions { display: block !important; }
+   113
+   114 .reply-bubble {
+   115     border-left: 3px solid #0d6efd;
+   116     background: rgba(13, 110, 253, 0.1);
+   117     font-size: 0.85rem;
+   118 }
+   119
+   120 .reply-preview {
+   121     background: #f8f9fa;
+   122     border-left: 3px solid #0d6efd;
+   123 }
+   124
+   125 .typing-indicator i {
+   126     animation: blink 1.4s infinite both;
+   127 }
+   128 .typing-indicator i:nth-child(2) { animation-delay: 0.2s; }
+   129 .typing-indicator i:nth-child(3) { animation-delay: 0.4s; }
+   130
+   131 @keyframes blink {
+   132     0%, 80%, 100% { opacity: 0; }
+   133     40% { opacity: 1; }
+   134 }
+   135
+   136 #image-preview-area img { border-radius: 12px; }
+   137
+   138 .toast-container { z-index: 1100; }
+   139 .toast { animation: slideInRight 0.3s ease; }
+   140 @keyframes slideInRight {
+   141     from { transform: translateX(100%); opacity: 0; }
+   142     to { transform: translateX(0); opacity: 1; }
+   143 }
+   144
+   145 .chat-input-container {
+   146     position: sticky;
+   147     bottom: 0;
+   148     z-index: 1000;
+   149     width: 100%;
+   150     background-color: var(--bs-body-bg); /* Use Bootstrap's body background color */
+   151     padding-bottom: env(safe-area-inset-bottom); /* Account for safe area insets */
+   152 }
+   153
+   154 #message-area {
+   155     padding-bottom: 20px; /* Adjust as needed, ensure space for input */
+   156 }
+   157
+   158 ::-webkit-scrollbar { width: 6px; }
+   159 ::-webkit-scrollbar-track { background: transparent; }
+   160 ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+   161 ::-webkit-scrollbar-thumb:hover { background: #999; }
+   162
+   163 .user-list { scrollbar-width: thin; scrollbar-color: #ccc transparent; }
+   164
+   165 #chat-form input:focus { box-shadow: 0 0 0 0.2rem rgba(13,110,253,0.15); border-color: #86b7fe; }
+   166
+   167 .card { border: none; }
+   168 .shadow-lg { box-shadow: 0 10px 40px rgba(0,0,0,0.1) !important; }
+   169
+   170 .min-vh-100 { min-height: 100vh; }
+   171
+   172 .input-group-text { border: none; background: #f8f9fa !important; }
+   173 .form-control { border: none; background: #f8f9fa !important; }
+   174 .form-control:focus { box-shadow: none; background: #fff !important; border: 1px solid #dee2e6; }
+   175
+   176 .opacity-50 { opacity: 0.5; }
+   177 .text-truncate { max-width: 200px; display: inline-block; }
+   178
+   179 /* Dark Mode - Default */
+   180 body { background: #1a1a2e; color: #e0e0e0; }
+   181
+   182 .chat-app { background: #16213e; }
+   183
+   184 .sidebar-mobile { background: #0f3460 !important; }
+   185
+   186 .user-item { border-color: #1a1a2e !important; }
+   187 .user-item:hover { background-color: #1a1a2e !important; }
+   188 .user-item.active { background-color: #1a1a2e !important; border-left-color: #00d4ff !important; }
+   189
+   190 .message-received { background: #2a2a4a !important; color: #e0e0e0 !important; }
+   191 .message-sent { background: linear-gradient(135deg, #0084ff, #00d4ff) !important; }
+   192
+   193 #message-area { background: #16213e !important; }
+   194 .reply-preview { background: #1a1a2e !important; border-color: #00d4ff !important; }
+   195
+   196 .typing-indicator { color: #00d4ff !important; }
+   197
+   198 ::-webkit-scrollbar-track { background: #0f3460; }
+   199 ::-webkit-scrollbar-thumb { background: #1a1a2e; }
+   200 ::-webkit-scrollbar-thumb:hover { background: #2a2a4a; }
+   201
+   202 .card { background: #0f3460 !important; color: #e0e0e0; }
+   203 .input-group-text { background: #1a1a2e !important; color: #e0e0e0 !important; border-color: #2a2a4a !important; }
+   204 .form-control { background: #1a1a2e !important; color: #e0e0e0 !important; border-color: #2a2a4a !important; }
+   205 .form-control:focus { background: #0f3460 !important; color: #e0e0e0 !important; border-color: #00d4ff !important; }
+   206
+   207 .form-control::placeholder { color: #888; }
+   208
+   209 .bg-light { background: #1a1a2e !important; }
+   210 .text-primary { color: #00d4ff !important; }
+   211 .border-bottom { border-color: #2a2a4a !important; }
+   212
+   213 .navbar { background: #0f3460 !important; }
+   214 .btn-outline-light { color: #e0e0e0; border-color: #e0e0e0; }
+   215 .btn-outline-light:hover { background: #1a1a2e; color: #00d4ff; }
+   216
+   217 #chat-form input { background: #1a1a2e !important; color: #e0e0e0 !important; }
+   218 #chat-form input:focus { border-color: #00d4ff !important; box-shadow: 0 0 0 0.2rem rgba(0,212,255,0.15) !important; }
+   219
+   220 .toast { background: #0f3460; color: #e0e0e0; }
+   221 .badge.bg-light { background: #1a1a2e !important; color: #00d4ff !important; }
+
+  new_string (Refactored CSS with variables and themes):
+
+     1 /*
+     2  * Base CSS: Defines layout, common styles, and animations.
+     3  * Theme-related styles are managed using CSS Custom Properties (variables)
+     4  * and theme-specific classes applied to the <body> tag.
+     5  */
+     6
+     7 /* Default Light Theme Variables (defined on :root) */
+     8 :root {
+     9     --primary-accent: #0d6efd;
+    10     --primary-accent-light: #6ea8fe;
+    11     --primary-accent-dark: #0a58ca;
+    12
+    13     --body-bg: #f8f9fa;
+    14     --body-color: #212529;
+    15
+    16     --navbar-bg: var(--primary-accent);
+    17     --navbar-text-color: #e0e0e0;
+    18
+    19     --chat-app-bg: #ffffff;
+    20     --sidebar-bg: #ffffff;
+    21     --sidebar-border-color: #dee2e6;
+    22
+    23     --user-item-border: #dee2e6;
+    24     --user-item-hover-bg: #f0f2f5;
+    25     --user-item-active-bg: #e7f3ff;
+    26     --user-item-active-border-left: var(--primary-accent);
+    27
+    28     --message-sent-bg-start: var(--primary-accent);
+    29     --message-sent-bg-end: var(--primary-accent-dark);
+    30     --message-sent-color: white;
+    31
+    32     --message-received-bg: #ffffff;
+    33     --message-received-color: #1a1a1a;
+    34
+    35     --message-time-sent-color: rgba(255,255,255,0.8);
+    36     --message-time-received-color: #999;
+    37
+    38     --reply-bubble-border: var(--primary-accent);
+    39     --reply-bubble-bg: rgba(13, 110, 253, 0.1);
+    40     --reply-preview-bg: #f8f9fa;
+    41
+    42     --typing-indicator-color: var(--primary-accent);
+    43
+    44     --scrollbar-track-bg: transparent;
+    45     --scrollbar-thumb-bg: #ccc;
+    46     --scrollbar-thumb-hover-bg: #999;
+    47
+    48     --card-bg: #ffffff;
+    49     --card-color: #212529;
+    50
+    51     --input-bg: #f8f9fa;
+    52     --input-color: #212529;
+    53     --input-border-color: #dee2e6;
+    54     --input-focus-shadow: 0 0 0 0.2rem var(--primary-accent-light);
+    55     --input-focus-border-color: var(--primary-accent-light);
+    56     --input-focus-bg: #fff;
+    57     --input-placeholder-color: #888;
+    58
+    59     --btn-outline-light-color: #e0e0e0;
+    60     --btn-outline-light-border-color: #e0e0e0;
+    61     --btn-outline-light-hover-bg: rgba(255,255,255,0.15);
+    62     --btn-outline-light-hover-color: var(--primary-accent);
+    63
+    64     --toast-bg: var(--primary-accent);
+    65     --toast-color: #fff;
+    66     --badge-bg-light: #f8f9fa;
+    67     --badge-text-primary: var(--primary-accent);
+    68 }
+    69
+    70 body {
+    71     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    72     overflow-x: hidden;
+    73     display: flex;
+    74     flex-direction: column;
+    75     background: var(--body-bg);
+    76     color: var(--body-color);
+    77 }
+    78
+    79 main { flex-grow: 1; display: flex; flex-direction: column; }
+    80
+    81 .chat-app { height: calc(100dvh - 76px); overflow-x: hidden; }
+    82
+    83 .hover-bg-light:hover { background-color: var(--user-item-hover-bg); cursor: pointer; }
+    84 .hover-bg-light.active { background-color: var(--user-item-active-bg); border-left: 3px solid var(--user-item-active-border-left); }
+    85
+    86 .user-item { transition: all 0.2s ease; border-color: var(--user-item-border); }
+    87 .user-item:hover { background-color: var(--user-item-hover-bg); }
+    88
+    89 .sidebar-mobile {
+    90     position: fixed;
+    91     top: 76px;
+    92     left: 0;
+    93     width: 280px;
+    94     height: calc(100dvh - 76px);
+    95     z-index: 1030;
+    96     transform: translateX(-100%);
+    97     transition: transform 0.3s ease;
+    98     box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    99     background: var(--sidebar-bg);
+   100     border-color: var(--sidebar-border-color);
+   101 }
+   102 .sidebar-mobile.show { transform: translateX(0); }
+   103
+   104 #message-area {
+   105     display: flex;
+   106     flex-direction: column;
+   107     overflow-x: hidden;
+   108     word-wrap: break-word;
+   109     background: var(--chat-app-bg);
+   110     padding-bottom: 20px; /* Adjust as needed, ensure space for input */
+   111 }
+   112
+   113 .message {
+   114     max-width: 70%;
+   115     margin-bottom: 12px;
+   116     padding: 10px 15px;
+   117     border-radius: 18px;
+   118     position: relative;
+   119     animation: fadeInUp 0.3s ease;
+   120     word-wrap: break-word;
+   121     overflow-wrap: break-word;
+   122 }
+   123
+   124 @media (max-width: 767.98px) {
+   125     .message { max-width: 85%; }
+   126 }
+   127
+   128 @keyframes fadeInUp {
+   129     from { opacity: 0; transform: translateY(10px); }
+   130     to { opacity: 1; transform: translateY(0); }
+   131 }
+   132
+   133 .message-sent {
+   134     align-self: flex-end;
+   135     background: linear-gradient(135deg, var(--message-sent-bg-start), var(--message-sent-bg-end));
+   136     color: var(--message-sent-color);
+   137     border-bottom-right-radius: 6px;
+   138     box-shadow: 0 2px 8px rgba(0,132,255,0.3);
+   139 }
+   140
+   141 .message-received {
+   142     align-self: flex-start;
+   143     background: var(--message-received-bg);
+   144     color: var(--message-received-color);
+   145     border-bottom-left-radius: 6px;
+   146     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+   147 }
+   148
+   149 .message-content { font-size: 0.95rem; line-height: 1.4; overflow-wrap: break-word; }
+   150 .message-content img { max-width: 100%; height: auto; border-radius: 12px; margin-top: 5px; cursor: pointer; display: block; object-fit: contain; }
+   151
+   152 @media (max-width: 767.98px) {
+   153     .message-content img { max-width: 100%; width: 100%; height: auto; }
+   154 }
+   155
+   156 .message img { max-width: 100% !important; height: auto !important; }
+   157
+   158 .message-time {
+   159     font-size: 0.7rem;
+   160     opacity: 0.7;
+   161     margin-top: 4px;
+   162     display: block;
+   163     text-align: right;
+   164 }
+   165
+   166 .message-sent .message-time { color: var(--message-time-sent-color); }
+   167 .message-received .message-time { color: var(--message-time-received-color); }
+   168
+   169 .message-actions { z-index: 10; }
+   170 .message:hover .message-actions { display: block !important; }
+   171
+   172 .reply-bubble {
+   173     border-left: 3px solid var(--reply-bubble-border);
+   174     background: var(--reply-bubble-bg);
+   175     font-size: 0.85rem;
+   176 }
+   177
+   178 .reply-preview {
+   179     background: var(--reply-preview-bg);
+   180     border-left: 3px solid var(--reply-bubble-border);
+   181 }
+   182
+   183 .typing-indicator i {
+   184     animation: blink 1.4s infinite both;
+   185     color: var(--typing-indicator-color);
+   186 }
+   187 .typing-indicator i:nth-child(2) { animation-delay: 0.2s; }
+   188 .typing-indicator i:nth-child(3) { animation-delay: 0.4s; }
+   189
+   190 @keyframes blink {
+   191     0%, 80%, 100% { opacity: 0; }
+   192     40% { opacity: 1; }
+   193 }
+   194
+   195 #image-preview-area img { border-radius: 12px; }
+   196
+   197 .toast-container { z-index: 1100; }
+   198 .toast {
+   199     animation: slideInRight 0.3s ease;
+   200     background: var(--toast-bg);
+   201     color: var(--toast-color);
+   202 }
+   203 @keyframes slideInRight {
+   204     from { transform: translateX(100%); opacity: 0; }
+   205     to { transform: translateX(0); opacity: 1; }
+   206 }
+   207
+   208 .chat-input-container {
+   209     position: sticky;
+   210     bottom: 0;
+   211     z-index: 1000;
+   212     width: 100%;
+   213     background-color: var(--body-bg); /* Use Bootstrap's body background color based on theme */
+   214     padding-bottom: env(safe-area-inset-bottom); /* Account for safe area insets */
+   215 }
+   216
+   217 ::-webkit-scrollbar { width: 6px; }
+   218 ::-webkit-scrollbar-track { background: var(--scrollbar-track-bg); }
+   219 ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb-bg); border-radius: 3px; }
+   220 ::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover-bg); }
+   221
+   222 .user-list { scrollbar-width: thin; scrollbar-color: var(--scrollbar-thumb-bg) var(--scrollbar-track-bg); }
+   223
+   224 #chat-form input:focus {
+   225     box-shadow: var(--input-focus-shadow);
+   226     border-color: var(--input-focus-border-color);
+   227 }
+   228
+   229 .card {
+   230     border: none;
+   231     background: var(--card-bg);
+   232     color: var(--card-color);
+   233 }
+   234 .shadow-lg { box-shadow: 0 10px 40px rgba(0,0,0,0.1); } /* Keep generic shadow */
+   235
+   236 .min-vh-100 { min-height: 100dvh; } /* Use dvh here too for consistency */
+   237
+   238 .input-group-text {
+   239     border: 1px solid var(--input-border-color); /* Add border for visibility */
+   240     background: var(--input-bg);
+   241     color: var(--input-color);
+   242 }
+   243 .form-control {
+   244     border: 1px solid var(--input-border-color); /* Add border for visibility */
+   245     background: var(--input-bg);
+   246     color: var(--input-color);
+   247 }
+   248 .form-control:focus {
+   249     box-shadow: var(--input-focus-shadow);
+   250     background: var(--input-focus-bg);
+   251     border-color: var(--input-focus-border-color);
+   252     color: var(--input-color);
+   253 }
+   254 .form-control::placeholder { color: var(--input-placeholder-color); }
+   255
+   256 .opacity-50 { opacity: 0.5; }
+   257 .text-truncate { max-width: 200px; display: inline-block; }
+   258
+   259
+   260 /* --- Theme Definitions --- */
+   261
+   262 /* Default Theme (Light) */
+   263 /* Already defined by :root */
+   264
+   265 /* Dark Theme */
+   266 body.theme-dark {
+   267     --primary-accent: #00d4ff;
+   268     --primary-accent-light: #0084ff;
+   269     --primary-accent-dark: #0066cc;
+   270
+   271     --body-bg: #1a1a2e;
+   272     --body-color: #e0e0e0;
+   273
+   274     --navbar-bg: #0f3460;
+   275     --navbar-text-color: #e0e0e0;
+   276
+   277     --chat-app-bg: #16213e;
+   278     --sidebar-bg: #0f3460;
+   279     --sidebar-border-color: #2a2a4a;
+   280
+   281     --user-item-border: #1a1a2e;
+   282     --user-item-hover-bg: #1a1a2e;
+   283     --user-item-active-bg: #1a1a2e;
+   284     --user-item-active-border-left: var(--primary-accent);
+   285
+   286     --message-sent-bg-start: #0084ff;
+   287     --message-sent-bg-end: var(--primary-accent);
+   288     --message-sent-color: white;
+   289
+   290     --message-received-bg: #2a2a4a;
+   291     --message-received-color: #e0e0e0;
+   292
+   293     --message-time-sent-color: rgba(255,255,255,0.8);
+   294     --message-time-received-color: #999;
+   295
+   296     --reply-bubble-border: var(--primary-accent);
+   297     --reply-bubble-bg: rgba(0, 212, 255, 0.1);
+   298     --reply-preview-bg: #1a1a2e;
+   299
+   300     --typing-indicator-color: var(--primary-accent);
+   301
+   302     --scrollbar-track-bg: #0f3460;
+   303     --scrollbar-thumb-bg: #1a1a2e;
+   304     --scrollbar-thumb-hover-bg: #2a2a4a;
+   305
+   306     --card-bg: #0f3460;
+   307     --card-color: #e0e0e0;
+   308
+   309     --input-bg: #1a1a2e;
+   310     --input-color: #e0e0e0;
+   311     --input-border-color: #2a2a4a;
+   312     --input-focus-shadow: 0 0 0 0.2rem rgba(0,212,255,0.15);
+   313     --input-focus-border-color: var(--primary-accent);
+   314     --input-focus-bg: #0f3460;
+   315     --input-placeholder-color: #888;
+   316
+   317     --btn-outline-light-color: #e0e0e0;
+   318     --btn-outline-light-border-color: #e0e0e0;
+   319     --btn-outline-light-hover-bg: #1a1a2e;
+   320     --btn-outline-light-hover-color: var(--primary-accent);
+   321
+   322     --toast-bg: #0f3460;
+   323     --toast-color: #e0e0e0;
+   324     --badge-bg-light: #1a1a2e;
+   325     --badge-text-primary: var(--primary-accent);
+   326 }
+   327
+   328 /* Blue Theme */
+   329 body.theme-blue {
+   330     --primary-accent: #0d6efd;
+   331     --primary-accent-light: #6ea8fe;
+   332     --primary-accent-dark: #0a58ca;
+   333
+   334     --body-bg: #e0f2f7;
+   335     --body-color: #212529;
+   336
+   337     --navbar-bg: var(--primary-accent);
+   338     --navbar-text-color: #e0e0e0;
+   339
+   340     --chat-app-bg: #ffffff;
+   341     --sidebar-bg: #e0f2f7;
+   342     --sidebar-border-color: #dee2e6;
+   343
+   344     --user-item-border: #dee2e6;
+   345     --user-item-hover-bg: #cce5ff;
+   346     --user-item-active-bg: #a3d1ff;
+   347     --user-item-active-border-left: var(--primary-accent);
+   348
+   349     --message-sent-bg-start: var(--primary-accent);
+   350     --message-sent-bg-end: var(--primary-accent-dark);
+   351     --message-sent-color: white;
+   352
+   353     --message-received-bg: #ffffff;
+   354     --message-received-color: #1a1a1a;
+   355
+   356     --message-time-sent-color: rgba(255,255,255,0.8);
+   357     --message-time-received-color: #999;
+   358
+   359     --reply-bubble-border: var(--primary-accent);
+   360     --reply-bubble-bg: rgba(13, 110, 253, 0.1);
+   361     --reply-preview-bg: #f0f8ff; /* Light blue tint */
+   362
+   363     --typing-indicator-color: var(--primary-accent);
+   364
+   365     --scrollbar-track-bg: #e0f2f7;
+   366     --scrollbar-thumb-bg: #a3d1ff;
+   367     --scrollbar-thumb-hover-bg: #6ea8fe;
+   368
+   369     --card-bg: #ffffff;
+   370     --card-color: #212529;
+   371
+   372     --input-bg: #e0f2f7;
+   373     --input-color: #212529;
+   374     --input-border-color: #a3d1ff;
+   375     --input-focus-shadow: 0 0 0 0.2rem var(--primary-accent-light);
+   376     --input-focus-border-color: var(--primary-accent);
+   377     --input-focus-bg: #fff;
+   378     --input-placeholder-color: #888;
+   379
+   380     --btn-outline-light-color: #e0e0e0;
+   381     --btn-outline-light-border-color: #e0e0e0;
+   382     --btn-outline-light-hover-bg: rgba(255,255,255,0.15);
+   383     --btn-outline-light-hover-color: var(--primary-accent);
+   384
+   385     --toast-bg: var(--primary-accent);
+   386     --toast-color: #fff;
+   387     --badge-bg-light: #e0f2f7;
+   388     --badge-text-primary: var(--primary-accent);
+   389 }
+   390
+   391 /* Green Theme */
+   392 body.theme-green {
+   393     --primary-accent: #28a745;
+   394     --primary-accent-light: #5cb874;
+   395     --primary-accent-dark: #218838;
+   396
+   397     --body-bg: #e6fae8;
+   398     --body-color: #212529;
+   399
+   400     --navbar-bg: var(--primary-accent);
+   401     --navbar-text-color: #e0e0e0;
+   402
+   403     --chat-app-bg: #ffffff;
+   404     --sidebar-bg: #e6fae8;
+   405     --sidebar-border-color: #dee2e6;
+   406
+   407     --user-item-border: #dee2e6;
+   408     --user-item-hover-bg: #d4edda;
+   409     --user-item-active-bg: #b9e6be;
+   410     --user-item-active-border-left: var(--primary-accent);
+   411
+   412     --message-sent-bg-start: var(--primary-accent);
+   413     --message-sent-bg-end: var(--primary-accent-dark);
+   414     --message-sent-color: white;
+   415
+   416     --message-received-bg: #ffffff;
+   417     --message-received-color: #1a1a1a;
+   418
+   419     --message-time-sent-color: rgba(255,255,255,0.8);
+   420     --message-time-received-color: #999;
+   421
+   422     --reply-bubble-border: var(--primary-accent);
+   423     --reply-bubble-bg: rgba(40, 167, 69, 0.1);
+   424     --reply-preview-bg: #f0fff0; /* Light green tint */
+   425
+   426     --typing-indicator-color: var(--primary-accent);
+   427
+   428     --scrollbar-track-bg: #e6fae8;
+   429     --scrollbar-thumb-bg: #b9e6be;
+   430     --scrollbar-thumb-hover-bg: #90d694;
+   431
+   432     --card-bg: #ffffff;
+   433     --card-color: #212529;
+   434
+   435     --input-bg: #e6fae8;
+   436     --input-color: #212529;
+   437     --input-border-color: #b9e6be;
+   438     --input-focus-shadow: 0 0 0 0.2rem var(--primary-accent-light);
+   439     --input-focus-border-color: var(--primary-accent);
+   440     --input-focus-bg: #fff;
+   441     --input-placeholder-color: #888;
+   442
+   443     --btn-outline-light-color: #e0e0e0;
+   444     --btn-outline-light-border-color: #e0e0e0;
+   445     --btn-outline-light-hover-bg: rgba(255,255,255,0.15);
+   446     --btn-outline-light-hover-color: var(--primary-accent);
+   447
+   448     --toast-bg: var(--primary-accent);
+   449     --toast-color: #fff;
+   450     --badge-bg-light: #e6fae8;
+   451     --badge-text-primary: var(--primary-accent);
+   452 }
+   453
+   454 /* Purple Theme */
+   455 body.theme-purple {
+   456     --primary-accent: #6f42c1;
+   457     --primary-accent-light: #8e6ee6;
+   458     --primary-accent-dark: #5a3d9a;
+   459
+   460     --body-bg: #f3e6fa;
+   461     --body-color: #212529;
+   462
+   463     --navbar-bg: var(--primary-accent);
+   464     --navbar-text-color: #e0e0e0;
+   465
+   466     --chat-app-bg: #ffffff;
+   467     --sidebar-bg: #f3e6fa;
+   468     --sidebar-border-color: #dee2e6;
+   469
+   470     --user-item-border: #dee2e6;
+   471     --user-item-hover-bg: #e2cff7;
+   472     --user-item-active-bg: #d4b8ee;
+   473     --user-item-active-border-left: var(--primary-accent);
+   474
+   475     --message-sent-bg-start: var(--primary-accent);
+   476     --message-sent-bg-end: var(--primary-accent-dark);
+   477     --message-sent-color: white;
+   478
+   479     --message-received-bg: #ffffff;
+   480     --message-received-color: #1a1a1a;
+   481
+   482     --message-time-sent-color: rgba(255,255,255,0.8);
+   483     --message-time-received-color: #999;
+   484
+   485     --reply-bubble-border: var(--primary-accent);
+   486     --reply-bubble-bg: rgba(111, 66, 193, 0.1);
+   487     --reply-preview-bg: #f8f0ff; /* Light purple tint */
+   488
+   489     --typing-indicator-color: var(--primary-accent);
+   490
+   491     --scrollbar-track-bg: #f3e6fa;
+   492     --scrollbar-thumb-bg: #d4b8ee;
+   493     --scrollbar-thumb-hover-bg: #c19ee6;
+   494
+   495     --card-bg: #ffffff;
+   496     --card-color: #212529;
+   497
+   498     --input-bg: #f3e6fa;
+   499     --input-color: #212529;
+   500     --input-border-color: #d4b8ee;
+   501     --input-focus-shadow: 0 0 0 0.2rem var(--primary-accent-light);
+   502     --input-focus-border-color: var(--primary-accent);
+   503     --input-focus-bg: #fff;
+   504     --input-placeholder-color: #888;
+   505
+   506     --btn-outline-light-color: #e0e0e0;
+   507     --btn-outline-light-border-color: #e0e0e0;
+   508     --btn-outline-light-hover-bg: rgba(255,255,255,0.15);
+   509     --btn-outline-light-hover-color: var(--primary-accent);
+   510
+   511     --toast-bg: var(--primary-accent);
+   512     --toast-color: #fff;
+   513     --badge-bg-light: #f3e6fa;
+   514     --badge-text-primary: var(--primary-accent);
+   515 }
+   516
+   517 /* Specific Bootstrap overrides with variables */
+   518 .bg-primary { background-color: var(--primary-accent) !important; }
+   519 .text-primary { color: var(--primary-accent) !important; }
+   520 .btn-primary {
+   521     --bs-btn-bg: var(--primary-accent);
+   522     --bs-btn-border-color: var(--primary-accent);
+   523     --bs-btn-hover-bg: var(--primary-accent-light);
+   524     --bs-btn-hover-border-color: var(--primary-accent-light);
+   525     --bs-btn-active-bg: var(--primary-accent-light);
+   526     --bs-btn-active-border-color: var(--primary-accent-light);
+   527 }
+   528 /* Revert Bootstrap defaults for other background/text utilities to use theme variables */
+   529 .bg-light { background-color: var(--body-bg) !important; }
+   530 .bg-white { background-color: var(--chat-app-bg) !important; }
+   531 .text-muted { color: var(--body-color) !important; } /* Ensure muted text is visible in all themes */
+   532
+   533 /* Navbar links and buttons specific to navbar background */
+   534 .navbar .nav-link { color: var(--navbar-text-color); }
+   535 .navbar .nav-link.btn-outline-light {
+   536     color: var(--btn-outline-light-color);
+   537     border-color: var(--btn-outline-light-border-color);
+   538 }
+   539 .navbar .nav-link.btn-outline-light:hover {
+   540     background: var(--btn-outline-light-hover-bg);
+   541     color: var(--btn-outline-light-hover-color);
+   542 }
+   543
+   544 /* Form controls */
+   545 .input-group-text {
+   546     border: 1px solid var(--input-border-color); /* Add border for visibility */
+   547     background: var(--input-bg);
+   548     color: var(--input-color);
+   549 }
+   550 .form-control {
+   551     border: 1px solid var(--input-border-color); /* Add border for visibility */
+   552     background: var(--input-bg);
+   553     color: var(--input-color);
+   554 }
+   555 .form-control:focus {
+   556     box-shadow: var(--input-focus-shadow);
+   557     background: var(--input-focus-bg);
+   558     border-color: var(--input-focus-border-color);
+   559     color: var(--input-color);
+   560 }
+   561 .form-control::placeholder { color: var(--input-placeholder-color); }
+   562
+   563 /* Toast messages */
+   564 .toast {
+   565     background: var(--toast-bg);
+   566     color: var(--toast-color);
+   567 }
+   568 .badge.bg-light {
+   569     background: var(--badge-bg-light);
+   570     color: var(--badge-text-primary);
+   571 }
+   572
+   573 /* Misc overrides */
+   574 .border-bottom { border-color: var(--sidebar-border-color) !important; }
+   575
+   576 /* Scrollbar colors based on theme */
+   577 ::-webkit-scrollbar-track { background: var(--scrollbar-track-bg); }
+   578 ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb-bg); border-radius: 3px; }
+   579 ::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover-bg); }
+   580 .user-list { scrollbar-color: var(--scrollbar-thumb-bg) var(--scrollbar-track-bg); }
+
+
+✦ You're right, I'm repeatedly neglecting to specify the old_string for the replace tool. I have both the full old_string and new_string from the previous block. I will now
+  execute the replace command, ensuring both are correctly provided.
+
+
+ ⠧ Thinking... (esc to cancel, 8m 45s)                                                                                                                      ? for shortcuts
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ auto-accept edits Shift+Tab to manual                                                                                                                     1 GEMINI.md file
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+ >   Type your message or @path/to/file                                                                                                                                     
+▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+ workspace (/directory)                                       branch                       sandbox                          /model                                    quota
+ ~/Desktop/agent_project/flask_chat_app                       main                         no sandbox                       gemini-2.5-flash                       18% used
+

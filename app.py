@@ -279,6 +279,18 @@ app.register_blueprint(auth_blueprint)
 from routes.main import main as main_blueprint
 app.register_blueprint(main_blueprint)
 
+from routes.settings import settings as settings_blueprint
+app.register_blueprint(settings_blueprint)
+
+def broadcast_online_users_list():
+    """Broadcast filtered online users list to everyone"""
+    online_user_ids = []
+    for uid in user_sid_map.keys():
+        user = User.query.get(uid)
+        if user and user.show_online_status:
+            online_user_ids.append(uid)
+    socketio.emit('online_users_list', {'user_ids': online_user_ids})
+
 # SocketIO events
 @socketio.on('connect')
 def handle_connect():
@@ -288,8 +300,11 @@ def handle_connect():
         online_users[sid] = current_user.id
         user_sid_map[current_user.id] = sid
         print(f"User {current_user.username} (ID: {current_user.id}) connected.")
-        emit('user_online', {'user_id': current_user.id}, broadcast=True)
-        emit('online_users_list', {'user_ids': list(user_sid_map.keys())})
+        # Only broadcast online status if user has it enabled
+        if current_user.show_online_status:
+            emit('user_online', {'user_id': current_user.id}, broadcast=True)
+        # Broadcast updated online users list (only those with online status enabled)
+        broadcast_online_users_list()
 
 @socketio.on('disconnect')
 def handle_disconnect():
@@ -300,7 +315,12 @@ def handle_disconnect():
         if user_id in user_sid_map:
             del user_sid_map[user_id]
         print(f"User ID {user_id} disconnected.")
-        emit('user_offline', {'user_id': user_id}, broadcast=True)
+        # Only broadcast offline status if user has it enabled
+        user = User.query.get(user_id)
+        if user and user.show_online_status:
+            emit('user_offline', {'user_id': user_id}, broadcast=True)
+        # Broadcast updated online users list
+        broadcast_online_users_list()
 
 @socketio.on('manual_logout')
 def handle_manual_logout():
@@ -310,7 +330,12 @@ def handle_manual_logout():
         del online_users[sid]
         if user_id in user_sid_map:
             del user_sid_map[user_id]
-        emit('user_offline', {'user_id': user_id}, broadcast=True)
+        # Only broadcast offline status if user has it enabled
+        user = User.query.get(user_id)
+        if user and user.show_online_status:
+            emit('user_offline', {'user_id': user_id}, broadcast=True)
+        # Broadcast updated online users list
+        broadcast_online_users_list()
 
 @socketio.on('private_message')
 def handle_private_message(data):
@@ -373,7 +398,7 @@ def handle_message_read(data):
 
 @socketio.on('typing')
 def handle_typing(data):
-    if current_user.is_authenticated:
+    if current_user.is_authenticated and current_user.typing_status_enabled:
         recipient_id = data.get('recipient_id')
         if recipient_id:
             emit('user_typing', {
@@ -383,19 +408,23 @@ def handle_typing(data):
 
 @socketio.on('stop_typing')
 def handle_stop_typing(data):
-    if current_user.is_authenticated:
+    if current_user.is_authenticated and current_user.typing_status_enabled:
         recipient_id = data.get('recipient_id')
         if recipient_id:
             emit('user_stop_typing', {
                 'user_id': current_user.id
             }, room=str(recipient_id), include_self=False)
 
+@socketio.on('toggle_online_status')
+def handle_toggle_online_status(data):
+    if current_user.is_authenticated:
+        show_online = data.get('show_online', True)
+        if show_online:
+            emit('user_online', {'user_id': current_user.id}, broadcast=True, include_self=False)
+        else:
+            emit('user_offline', {'user_id': current_user.id}, broadcast=True, include_self=False)
+
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
-    # Use eventlet only if available and not in production
-    try:
-        import eventlet
-        socketio.run(app, host='0.0.0.0', port=port, debug=not is_production)
-    except ImportError:
-        # Fallback to standard Flask development server
-        app.run(host='0.0.0.0', port=port, debug=not is_production)
+    # Always use socketio.run() for proper WebSocket support
+    socketio.run(app, host='0.0.0.0', port=port, debug=not is_production, allow_unsafe_werkzeug=True)

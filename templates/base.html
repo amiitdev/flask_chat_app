@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body data-user-id="{{ current_user.id if current_user.is_authenticated else '' }}">
+<body class="{% if current_user.is_authenticated %}theme-{{ current_user.theme_preference or 'dark' }}{% else %}theme-dark{% endif %}" data-user-id="{{ current_user.id if current_user.is_authenticated else '' }}">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
         <div class="container-fluid">
             <button class="navbar-toggler d-md-none me-2" type="button" id="sidebarToggle">
@@ -28,6 +28,11 @@
                                 <img src="{{ current_user.profile_pic if current_user.profile_pic and current_user.profile_pic.startswith('http') else '/static/uploads/profiles/' + (current_user.profile_pic if current_user.profile_pic else 'default.png') }}"
                                      class="rounded-circle me-2" width="32" height="32" style="object-fit:cover;">
                                 <span class="text-white">{{ current_user.username }}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item me-2">
+                            <a class="nav-link" href="{{ url_for('settings.user_settings') }}">
+                                <i class="fas fa-cog me-1"></i>Settings
                             </a>
                         </li>
                         <li class="nav-item">
@@ -74,6 +79,28 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
     <script>
         const socket = io();
+        let soundEnabled = {% if current_user.is_authenticated and current_user.sound_enabled %}true{% else %}false{% endif %};
+        let notificationSound = "{% if current_user.is_authenticated and current_user.notification_sound_choice %}{{ current_user.notification_sound_choice }}{% else %}notification.mp3{% endif %}";
+        let typingStatusEnabled = {% if current_user.is_authenticated and current_user.typing_status_enabled %}true{% else %}false{% endif %};
+        let readReceiptsEnabled = {% if current_user.is_authenticated and current_user.read_receipts_enabled %}true{% else %}false{% endif %};
+
+        function playNotificationSound() {
+            if (!soundEnabled) return;
+            const audio = new Audio("{{ url_for('static', filename='sounds/') }}" + notificationSound);
+            audio.play().catch(e => console.log('Sound play failed:', e));
+        }
+
+        function switchTheme(theme) {
+            document.body.className = 'theme-' + theme;
+            localStorage.setItem('selectedTheme', theme);
+            // Save to server
+            fetch('/settings/theme_switch', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ theme: theme })
+            }).catch(e => console.error('Failed to save theme preference:', e));
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             const toasts = document.querySelectorAll('.toast');
             toasts.forEach(toast => {
@@ -89,12 +116,28 @@
                     }
                 });
             }
+
+            const savedTheme = localStorage.getItem('selectedTheme');
+            if (savedTheme && savedTheme !== '{{ current_user.theme_preference or "dark" if current_user.is_authenticated else "dark" }}') {
+                switchTheme(savedTheme);
+            }
         });
+
         function handleLogout() {
             socket.emit('manual_logout');
             setTimeout(() => {
                 window.location.href = "{{ url_for('auth.logout') }}";
             }, 100);
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const btn = document.getElementById('sound-toggle-btn');
+            if (btn) {
+                btn.innerHTML = soundEnabled ?
+                    '<i class="fas fa-volume-up"></i> Sound ON' :
+                    '<i class="fas fa-volume-mute"></i> Sound OFF';
+            }
         }
     </script>
     {% block scripts %}{% endblock %}

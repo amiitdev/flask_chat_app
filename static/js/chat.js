@@ -7,13 +7,12 @@ document.addEventListener('DOMContentLoaded', function() {
     let replyToMessageData = null;
     const currentUserId = parseInt(document.body.getAttribute('data-user-id'), 10);
 
-    const notificationSound = new Audio('/static/sounds/notification.mp3');
-    let soundEnabled = localStorage.getItem('soundEnabled') === 'false' ? false : true; // Default to true
+    // Use global variables from base.html
+    // soundEnabled, notificationSound, typingStatusEnabled, readReceiptsEnabled are defined in base.html
 
     function playSound() {
-        if (soundEnabled) {
-            notificationSound.currentTime = 0; // Rewind to start if already playing
-            notificationSound.play().catch(e => console.error("Error playing sound:", e));
+        if (typeof playNotificationSound === 'function') {
+            playNotificationSound();
         }
     }
 
@@ -51,6 +50,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     socket.on('online_users_list', function(data) {
+        // First, mark all users as offline
+        document.querySelectorAll('.user-item').forEach(function(item) {
+            const userId = parseInt(item.getAttribute('data-user-id'), 10);
+            updateUserStatus(userId, false);
+        });
+        // Then mark online users from the list
         if (data.user_ids) {
             data.user_ids.forEach(function(userId) {
                 updateUserStatus(userId, true);
@@ -98,10 +103,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     messageInput.addEventListener('input', function() {
         if (!currentRecipientId) return;
-        socket.emit('typing', { recipient_id: currentRecipientId });
+        if (typingStatusEnabled) {
+            socket.emit('typing', { recipient_id: currentRecipientId });
+        }
         clearTimeout(typingTimeout);
         typingTimeout = setTimeout(function() {
-            socket.emit('stop_typing', { recipient_id: currentRecipientId });
+            if (typingStatusEnabled) {
+                socket.emit('stop_typing', { recipient_id: currentRecipientId });
+            }
         }, 1000);
     });
 
@@ -169,12 +178,19 @@ document.addEventListener('DOMContentLoaded', function() {
     window.cancelReply = cancelReply;
 
     function toggleSound() {
-        soundEnabled = !soundEnabled;
-        localStorage.setItem('soundEnabled', soundEnabled);
+        if (typeof soundEnabled !== 'undefined') {
+            soundEnabled = !soundEnabled;
+        }
         const soundToggleBtn = document.getElementById('sound-toggle-btn');
         if (soundToggleBtn) {
             updateSoundToggleButton(soundToggleBtn);
         }
+        // Save preference to server
+        fetch('/settings/sound_toggle', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ sound_enabled: soundEnabled })
+        }).catch(e => console.error('Failed to save sound preference:', e));
     }
     window.toggleSound = toggleSound; // Expose to global scope for HTML event listener
 
@@ -259,6 +275,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     socket.on('read_receipt', function(data) {
+        if (!readReceiptsEnabled) return;
         // Find the message element by its ID
         const messageElement = document.querySelector('.message[data-message-id="' + data.message_id + '"]');
         if (messageElement) {
@@ -379,7 +396,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const messageObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting) {
+            if (entry.isIntersecting && readReceiptsEnabled) {
                 const messageElement = entry.target;
                 const messageId = messageElement.getAttribute('data-message-id');
                 const senderId = parseInt(messageElement.getAttribute('data-sender-id'), 10);

@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}Settings{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg p-4">
+                <h2 class="card-title text-center mb-4">User Settings</h2>
+                <form method="POST" action="{{ url_for('settings.user_settings') }}">
+                    <div class="mb-4">
+                        <h5 class="mb-3">Theme Settings</h5>
+                        <div class="form-check form-switch mb-2">
+                            <input class="form-check-input" type="radio" name="theme_preference" id="themeDark" value="dark" {% if user.theme_preference == 'dark' %}checked{% endif %}>
+                            <label class="form-check-label" for="themeDark">Dark Theme</label>
+                        </div>
+                        <div class="form-check form-switch mb-2">
+                            <input class="form-check-input" type="radio" name="theme_preference" id="themeLight" value="light" {% if user.theme_preference == 'light' %}checked{% endif %}>
+                            <label class="form-check-label" for="themeLight">Light Theme</label>
+                        </div>
+                        <div class="form-check form-switch mb-2">
+                            <input class="form-check-input" type="radio" name="theme_preference" id="themeBlue" value="blue" {% if user.theme_preference == 'blue' %}checked{% endif %}>
+                            <label class="form-check-label" for="themeBlue">Blue Theme</label>
+                        </div>
+                        <div class="form-check form-switch mb-2">
+                            <input class="form-check-input" type="radio" name="theme_preference" id="themeGreen" value="green" {% if user.theme_preference == 'green' %}checked{% endif %}>
+                            <label class="form-check-label" for="themeGreen">Green Theme</label>
+                        </div>
+                        <div class="form-check form-switch mb-2">
+                            <input class="form-check-input" type="radio" name="theme_preference" id="themePurple" value="purple" {% if user.theme_preference == 'purple' %}checked{% endif %}>
+                            <label class="form-check-label" for="themePurple">Purple Theme</label>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <h5 class="mb-3">Sound Settings</h5>
+                        <div class="form-check form-switch mb-2">
+                            <input class="form-check-input" type="checkbox" name="sound_enabled" id="soundEnabled" {% if user.sound_enabled %}checked{% endif %}>
+                            <label class="form-check-label" for="soundEnabled">Enable Notification Sounds</label>
+                        </div>
+                        <div class="mb-3">
+                            <label for="notificationSoundChoice" class="form-label">Notification Sound:</label>
+                            <select class="form-select" id="notificationSoundChoice" name="notification_sound_choice">
+                                {% for sound_file in sound_files %}
+                                <option value="{{ sound_file }}" {% if user.notification_sound_choice == sound_file %}selected{% endif %}>{{ sound_file | replace('_', ' ') | capitalize }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <h5 class="mb-3">Privacy Settings</h5>
+                        <div class="form-check form-switch mb-2">
+                            <input class="form-check-input" type="checkbox" name="show_online_status" id="showOnlineStatus" {% if user.show_online_status %}checked{% endif %}>
+                            <label class="form-check-label" for="showOnlineStatus">Show Online Status</label>
+                        </div>
+                        <div class="form-check form-switch mb-2">
+                            <input class="form-check-input" type="checkbox" name="typing_status_enabled" id="typingStatusEnabled" {% if user.typing_status_enabled %}checked{% endif %}>
+                            <label class="form-check-label" for="typingStatusEnabled">Enable Typing Status (others see when you type)</label>
+                        </div>
+                        <div class="form-check form-switch mb-2">
+                            <input class="form-check-input" type="checkbox" name="read_receipts_enabled" id="readReceiptsEnabled" {% if user.read_receipts_enabled %}checked{% endif %}>
+                            <label class="form-check-label" for="readReceiptsEnabled">Enable Read Receipts (others see when you read their messages)</label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const themeRadios = document.querySelectorAll('input[name="theme_preference"]');
+    themeRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            if (this.checked) {
+                switchTheme(this.value);
+            }
+        });
+    });
+});
+</script>
+{% endblock %}
