@@ -9,7 +9,7 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password_hash = db.Column(db.String(255), nullable=False)
-    profile_pic = db.Column(db.String(200), default='https://ui-avatars.com/api/?name=User&background=0d6efd&color=fff&size=128')
+    profile_pic = db.Column(db.String(500), default='https://ui-avatars.com/api/?name=User&background=0d6efd&color=fff&size=128')
 
     reset_token = db.Column(db.String(100), nullable=True)
     reset_token_expiry = db.Column(db.DateTime, nullable=True)
