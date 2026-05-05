@@ -9,15 +9,11 @@ body {
 body.chat-page {
     height: 100vh;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
 }
 
 body.chat-page main {
-    flex: 1;
+    height: calc(100vh - 76px);
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
 }
 
 /* ===== Chat Container - Fixed Layout ===== */
