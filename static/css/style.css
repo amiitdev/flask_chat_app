@@ -97,6 +97,8 @@ main {
     padding: 1.5rem;
     -webkit-overflow-scrolling: touch;
     background: #f8f9fa;
+    display: flex;
+    flex-direction: column;
 }
 
 .chat-input-area {
