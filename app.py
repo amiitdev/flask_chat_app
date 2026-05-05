@@ -100,7 +100,7 @@ login_manager.init_app(app)
 login_manager.login_view = 'auth.login'
 
 # Cloudinary configuration
-if CLOUDINARY_AVAILABLE and os.getenv('CLOUDINARY_CLOUD_NAME'):
+if False and CLOUDINARY_AVAILABLE and os.getenv('CLOUDINARY_CLOUD_NAME'):
     cloudinary.config(
         cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME'),
         api_key=os.getenv('CLOUDINARY_API_KEY'),
@@ -129,7 +129,7 @@ def upload_file():
     if file and allowed_file(file.filename):
         filename = str(uuid.uuid4()) + '_' + secure_filename(file.filename)
 
-        if CLOUDINARY_AVAILABLE and os.getenv('CLOUDINARY_CLOUD_NAME'):
+        if False and CLOUDINARY_AVAILABLE and os.getenv('CLOUDINARY_CLOUD_NAME'):
             # Upload to Cloudinary
             upload_result = cloudinary.uploader.upload(
                 file,
@@ -163,7 +163,7 @@ def upload_profile():
     if file and allowed_file(file.filename):
         filename = f"user_{current_user.id}_" + secure_filename(file.filename)
 
-        if CLOUDINARY_AVAILABLE and os.getenv('CLOUDINARY_CLOUD_NAME'):
+        if False and CLOUDINARY_AVAILABLE and os.getenv('CLOUDINARY_CLOUD_NAME'):
             upload_result = cloudinary.uploader.upload(
                 file,
                 folder='chat_app/profiles',
