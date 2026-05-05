@@ -64,3 +64,16 @@ def switch_theme():
         db.session.commit()
         return jsonify({'success': True})
     return jsonify({'success': False}), 400
+
+@settings.route('/settings/clear_chats', methods=['POST'])
+@login_required
+def clear_chats():
+    try:
+        # Delete all messages where current user is sender or recipient
+        Message.query.filter(
+            (Message.sender_id == current_user.id) | (Message.recipient_id == current_user.id)
+        ).delete(synchronize_session=False)
+        db.session.commit()
+        return jsonify({'success': True, 'message': 'All chats cleared'})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500

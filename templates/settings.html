@@ -65,12 +65,40 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+                    <button type="submit" class="btn btn-primary w-100 mb-3">Save Changes</button>
                 </form>
+
+                <hr>
+
+                <div class="d-grid gap-2">
+                    <button class="btn btn-warning" onclick="confirmClearChats()">
+                        <i class="fas fa-trash-alt me-2"></i>Clear All Chats
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+function confirmClearChats() {
+    if (confirm('Are you sure you want to delete ALL your messages? This action cannot be undone.')) {
+        fetch('{{ url_for("settings.clear_chats") }}', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                alert('All chats cleared successfully!');
+            } else {
+                alert('Error: ' + (data.error || 'Unknown error'));
+            }
+        })
+        .catch(err => alert('Error clearing chats: ' + err));
+    }
+}
+</script>
 {% endblock %}
 
 {% block scripts %}

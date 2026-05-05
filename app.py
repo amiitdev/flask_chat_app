@@ -305,6 +305,9 @@ app.register_blueprint(main_blueprint)
 from routes.settings import settings as settings_blueprint
 app.register_blueprint(settings_blueprint)
 
+from routes.admin import admin as admin_blueprint
+app.register_blueprint(admin_blueprint)
+
 def broadcast_online_users_list():
     """Broadcast filtered online users list to everyone"""
     online_user_ids = []
