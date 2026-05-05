@@ -79,6 +79,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
             currentRecipientId = userId;
             currentRecipientUsername = username;
+            
+            // Set the current chat user for clear chats functionality
+            if (typeof setCurrentChatUser !== 'undefined') {
+                setCurrentChatUser(userId);
+            }
             chatWithName.textContent = username;
             chatAvatar.src = avatarSrc;
             chatWindow.classList.remove('d-none');
@@ -396,7 +401,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.deleteMessage = function(id) {
         if (confirm('Delete this message?')) {
-            fetch('/message/' + id + '/delete', { method: 'POST' });
+            fetch('/message/' + id + '/delete', { method: 'POST' })
+            .then(() => {
+                const msgEl = document.querySelector(`[data-message-id="${id}"]`);
+                if (msgEl) {
+                    msgEl.innerHTML = '<em class="text-muted">This message was deleted</em>';
+                    msgEl.classList.add('opacity-50');
+                }
+            })
+            .catch(err => console.error('Delete error:', err));
+        }
+    };
         }
     };
 

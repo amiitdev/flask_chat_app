@@ -65,15 +65,16 @@ def switch_theme():
         return jsonify({'success': True})
     return jsonify({'success': False}), 400
 
-@settings.route('/settings/clear_chats', methods=['POST'])
+@settings.route('/settings/clear_chats/<int:user_id>', methods=['POST'])
 @login_required
-def clear_chats():
+def clear_chats(user_id):
     try:
-        # Delete all messages where current user is sender or recipient
+        # Delete messages between current user and specified user
         Message.query.filter(
-            (Message.sender_id == current_user.id) | (Message.recipient_id == current_user.id)
+            ((Message.sender_id == current_user.id) & (Message.recipient_id == user_id)) |
+            ((Message.sender_id == user_id) & (Message.recipient_id == current_user.id))
         ).delete(synchronize_session=False)
         db.session.commit()
-        return jsonify({'success': True, 'message': 'All chats cleared'})
+        return jsonify({'success': True, 'message': 'Chat cleared'})
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
