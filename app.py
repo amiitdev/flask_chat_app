@@ -50,7 +50,7 @@ else:
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initialize database
-print(f"DEBUG: SQLALCHEMY_DATABASE_URI before init_app: {app.config.get('SQLALCHEMY_DATABASE_URI')}")
+
 db.init_app(app)
 with app.app_context():
     db.create_all()
