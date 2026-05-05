@@ -7,6 +7,16 @@ document.addEventListener('DOMContentLoaded', function() {
     let replyToMessageData = null;
     const currentUserId = parseInt(document.body.getAttribute('data-user-id'), 10);
 
+    const notificationSound = new Audio('/static/sounds/notification.mp3');
+    let soundEnabled = localStorage.getItem('soundEnabled') === 'false' ? false : true; // Default to true
+
+    function playSound() {
+        if (soundEnabled) {
+            notificationSound.currentTime = 0; // Rewind to start if already playing
+            notificationSound.play().catch(e => console.error("Error playing sound:", e));
+        }
+    }
+
     const userItems = document.querySelectorAll('.user-item');
     const chatWindow = document.getElementById('chat-window');
     const noChatSelected = document.getElementById('no-chat-selected');
@@ -132,6 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
             cancelReply();
         }
         socket.emit('private_message', data);
+        playSound(); // Play sound after sending message
     }
 
     imageUpload.addEventListener('change', function(e) {
@@ -157,6 +168,30 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     window.cancelReply = cancelReply;
+
+    function toggleSound() {
+        soundEnabled = !soundEnabled;
+        localStorage.setItem('soundEnabled', soundEnabled);
+        const soundToggleBtn = document.getElementById('sound-toggle-btn');
+        if (soundToggleBtn) {
+            updateSoundToggleButton(soundToggleBtn);
+        }
+    }
+    window.toggleSound = toggleSound; // Expose to global scope for HTML event listener
+
+    function updateSoundToggleButton(buttonElement) {
+        if (soundEnabled) {
+            buttonElement.innerHTML = '<i class="fas fa-volume-up"></i> Sound ON';
+            buttonElement.classList.remove('btn-outline-secondary');
+            buttonElement.classList.add('btn-secondary');
+        } else {
+            buttonElement.innerHTML = '<i class="fas fa-volume-mute"></i> Sound OFF';
+            buttonElement.classList.remove('btn-secondary');
+            buttonElement.classList.add('btn-outline-secondary');
+        }
+    }
+
+
 
     socket.on('new_message', function(data) {
         if (currentRecipientId) {
@@ -368,6 +403,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Call observeNewMessages when new messages are added (e.g., after appendMessage or fetch)
     // This will be done in appendMessage and fetch('/messages/').
+
+    const soundToggleBtn = document.getElementById('sound-toggle-btn');
+    if (soundToggleBtn) {
+        updateSoundToggleButton(soundToggleBtn);
+    }
 
     function showToast(message) {
         const toastHTML = '<div class="toast align-items-center text-bg-primary border-0 show" role="alert" style="animation: slideInRight 0.3s ease;">' +
