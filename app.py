@@ -44,21 +44,11 @@ else:
     
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# Don't initialize database at module level - do it lazily
-def init_db():
-    """Initialize database if not already done."""
-    if not hasattr(init_db, 'initialized'):
-        try:
-            db.init_app(app)
-            with app.app_context():
-                db.create_all()
-            init_db.initialized = True
-            print("Database initialized successfully")
-        except Exception as e:
-            print(f"Warning: Database initialization failed: {e}")
-
-# Call this before first database access
-init_db()
+# Initialize database
+db.init_app(app)
+with app.app_context():
+    db.create_all()
+    print("Database initialized successfully")
 
 # Flask-Migrate for database migrations (optional, for manual use)
 try:

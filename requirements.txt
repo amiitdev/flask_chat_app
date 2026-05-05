@@ -7,6 +7,6 @@ gunicorn==21.2.0
 python-dotenv==1.0.0
 Werkzeug==3.0.1
 Pillow>=10.2.0
-psycopg2-binary==2.9.9
+psycopg2
 cloudinary==1.36.0
 Flask-Migrate==4.0.5
