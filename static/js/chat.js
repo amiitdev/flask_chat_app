@@ -84,6 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (typeof setCurrentChatUser !== 'undefined') {
                 setCurrentChatUser(userId);
             }
+            
             chatWithName.textContent = username;
             chatAvatar.src = avatarSrc;
             chatWindow.classList.remove('d-none');
@@ -412,7 +413,6 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(err => console.error('Delete error:', err));
         }
     };
-        }
     };
 
     function scrollToBottom() {
