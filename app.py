@@ -48,6 +48,9 @@ else:
     print("DEBUG: Using SQLite fallback (DATABASE_URL not set)")
     
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
+
+
 
 # Initialize database
 
