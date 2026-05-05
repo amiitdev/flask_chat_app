@@ -9,7 +9,8 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password_hash = db.Column(db.String(255), nullable=False)
-    profile_pic = db.Column(db.String(200), default='https://res.cloudinary.com/demo/image/upload/default_profile.png')
+    profile_pic = db.Column(db.String(200), default='https://res.cloudinary.com/de1kdinoe/image/upload/v1/chat_app/profiles/default_profile.png')
+
     reset_token = db.Column(db.String(100), nullable=True)
     reset_token_expiry = db.Column(db.DateTime, nullable=True)
 
