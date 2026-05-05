@@ -36,9 +36,13 @@ print(f"DEBUG: DATABASE_URL = {'SET' if db_url else 'NOT SET'}")
 if db_url and db_url != '':
     if db_url.startswith('postgres://'):
         db_url = db_url.replace('postgres://', 'postgresql://', 1)
+    # Ensure SSL mode is set for production PostgreSQL connections
+    if '?' not in db_url and 'postgresql://' in db_url:
+        db_url += '?sslmode=require'
+    elif '?sslmode=' not in db_url and 'postgresql://' in db_url:
+        db_url += '&sslmode=require'
     app.config['SQLALCHEMY_DATABASE_URI'] = db_url
-    print(f"DEBUG: Using PostgreSQL database")
-else:
+    print(f"DEBUG: Using PostgreSQL database")else:
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///chat.db'
     print("DEBUG: Using SQLite fallback (DATABASE_URL not set)")
     
